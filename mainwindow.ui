@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>545</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Haushaltsbuch</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTableView" name="tableView">
+      <property name="cursor" stdset="0">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::NoDragDrop</enum>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::NoSelection</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>545</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDatei">
+    <property name="title">
+     <string>Datei</string>
+    </property>
+    <addaction name="actionNew_Person"/>
+    <addaction name="actionNew_Group"/>
+    <addaction name="actionNew_Category"/>
+    <addaction name="actionNew_Account"/>
+    <addaction name="separator"/>
+    <addaction name="actionNew_Booking"/>
+    <addaction name="actionRebooking"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuAnsicht">
+    <property name="title">
+     <string>Ansicht</string>
+    </property>
+    <addaction name="actionOverview"/>
+    <addaction name="actionBookigs"/>
+    <addaction name="actionPersons"/>
+    <addaction name="actionGroups"/>
+   </widget>
+   <addaction name="menuDatei"/>
+   <addaction name="menuAnsicht"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNew_Booking"/>
+   <addaction name="actionRebooking"/>
+  </widget>
+  <action name="actionNew_Person">
+   <property name="text">
+    <string>Neue Person</string>
+   </property>
+  </action>
+  <action name="actionNew_Group">
+   <property name="text">
+    <string>Neue Gruppe</string>
+   </property>
+  </action>
+  <action name="actionNew_Category">
+   <property name="text">
+    <string>Neue Kategorie</string>
+   </property>
+  </action>
+  <action name="actionNew_Account">
+   <property name="text">
+    <string>Neues Konto</string>
+   </property>
+  </action>
+  <action name="actionNew_Booking">
+   <property name="text">
+    <string>Neue Buchung</string>
+   </property>
+  </action>
+  <action name="actionRebooking">
+   <property name="text">
+    <string>Umbuchung</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Einstellungen</string>
+   </property>
+  </action>
+  <action name="actionOverview">
+   <property name="text">
+    <string>Übersicht</string>
+   </property>
+  </action>
+  <action name="actionBookigs">
+   <property name="text">
+    <string>Buchungen</string>
+   </property>
+  </action>
+  <action name="actionPersons">
+   <property name="text">
+    <string>Personen</string>
+   </property>
+  </action>
+  <action name="actionGroups">
+   <property name="text">
+    <string>Gruppen</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
