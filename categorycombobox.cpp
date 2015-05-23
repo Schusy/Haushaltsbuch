@@ -36,7 +36,7 @@ void CategoryComboBox::showPopup()
 
     m_popupWidget->show();
 
-
+    // asdf
 }
 
 void CategoryComboBox::hidePopup()
