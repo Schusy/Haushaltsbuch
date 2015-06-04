@@ -5,6 +5,8 @@
 #include "booking.h"
 #include <QDoubleValidator>
 #include "category.h"
+#include <QTreeView>
+#include <QStandardItemModel>
 
 namespace Ui {
 class BookingWidget;
@@ -23,8 +25,6 @@ signals:
 public slots:
 
 private slots:
-    void on_categorySelected(Category *category);
-
     void on_okButton_clicked();
 
     void on_cancelButton_clicked();
@@ -36,6 +36,10 @@ private:
 
     Booking m_booking;
 
+    void traverseCategories(Category *category, QStandardItem *fatherItem);
+
+    QTreeView *m_categoryView;
+    QStandardItemModel *m_categoryModel;
     QDoubleValidator *m_amountValidator;
 };
 

@@ -23,10 +23,13 @@ HEADERS  += mainwindow.h \
     booking.h \
     category.h \
     bookingwidget.h \
-    categorycombobox.h
+    categorycombobox.h \
+    constants.h
 
 FORMS    += mainwindow.ui \
     bookingwidget.ui
 
 RESOURCES += \
     icons.qrc
+
+ICON = book227.icns

@@ -4,8 +4,12 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QMessageBox>
+#include "category.h"
 
 #include <QDebug>
+
+static int numberCategories = 4;
+
 
 
 BookingWidget::BookingWidget(QWidget *parent) :
@@ -21,18 +25,27 @@ BookingWidget::BookingWidget(QWidget *parent) :
     m_amountValidator->setDecimals(2);
     ui->amountEdit->setValidator(m_amountValidator);
 
-    // Populate the category picker
-    CategoryComboBox *categoryComboBox = ui->comboBox;
-    QVector<Category *> categories = Category::getCategories();
-    QStringList categoryStringList;
-    for (int i = 0; i < categories.size(); i++) {
-        categoryStringList.append(categories.at(i)->title());
-    }
-    categoryStringList.append(QString("  Unterkategorie"));
-    categoryComboBox->insertItems(0, categoryStringList);
-    categoryComboBox->insertSeparator(1);
-    connect(categoryComboBox, SIGNAL(categorySelected(Category*)), this, SLOT(on_categorySelected(Category*)));
+    Category *root = Category::getCategories();
+    QVector<Category *> categories = root->getChildren();
 
+    m_categoryView = new QTreeView();
+    m_categoryModel = new QStandardItemModel();
+
+    QStandardItem *parentItem = m_categoryModel->invisibleRootItem();
+
+    for (int i = 0; i < categories.count(); ++i) {
+        parentItem->setSelectable(false);
+        Category *category = categories.at(i);
+        QStandardItem *item = new QStandardItem(category->title());
+        parentItem->appendRow(item);
+        traverseCategories(category, item);
+    }
+
+    ui->comboBox->setView(m_categoryView);
+    ui->comboBox->setModel(m_categoryModel);
+    m_categoryView->expandAll();
+
+    ui->comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
     // Setup standard imageLabel
     QImage whiteImage(200, 150, QImage::Format_RGB32);
@@ -47,12 +60,15 @@ BookingWidget::~BookingWidget()
     delete ui;
 }
 
-void BookingWidget::on_categorySelected(Category *category)
-{
-    qDebug() << "bookingwidget category: " << category->title();
-    ui->comboBox->setItemIcon(ui->comboBox->currentIndex(), category->icon);
-    ui->comboBox->setItemText(ui->comboBox->currentIndex(), category->title());
-    m_booking.setCategory(category);
+void BookingWidget::traverseCategories(Category *category, QStandardItem *fatherItem) {
+    QVector<Category *> children = category->getChildren();
+    int numChildren = children.size();
+
+    for (int i = 0; i < numChildren; i++) {
+        QStandardItem *categoryItem = new QStandardItem(children.at(i)->title());
+        fatherItem->appendRow(categoryItem);
+        traverseCategories(children.at(i), categoryItem);
+    }
 }
 
 void BookingWidget::on_okButton_clicked()
@@ -63,6 +79,8 @@ void BookingWidget::on_okButton_clicked()
     QString amount = ui->amountEdit->text();
     // Konto
     QString account = ui->accountEdit->text();
+    //Kategorie
+    Category category(ui->comboBox->currentData().toString());
     // Notizen
     QString notes = ui->notesEdit->toPlainText();
     // Bild
@@ -84,6 +102,7 @@ void BookingWidget::on_okButton_clicked()
     m_booking.m_account = account;
     m_booking.m_bookingTime = time;
     m_booking.m_amount = amount;
+    m_booking.m_category = category.title();
     m_booking.m_note = notes;
     m_booking.m_image = image;
 

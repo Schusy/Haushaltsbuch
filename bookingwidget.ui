@@ -13,8 +13,8 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3">
-   <item>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label">
@@ -119,11 +119,15 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="CategoryComboBox" name="comboBox"/>
+      <widget class="QComboBox" name="comboBox">
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
-   <item>
+   <item row="0" column="1">
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <spacer name="verticalSpacer">
@@ -160,13 +164,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CategoryComboBox</class>
-   <extends>QComboBox</extends>
-   <header location="global">categorycombobox.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>dateTimeEdit</tabstop>
   <tabstop>amountEdit</tabstop>

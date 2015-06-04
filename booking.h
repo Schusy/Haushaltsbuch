@@ -14,7 +14,7 @@ public:
     explicit Booking(QObject *parent = 0);
     ~Booking();
 
-    void setCategory(Category *category);
+    void setCategory(Category category);
 
 signals:
 
@@ -31,7 +31,8 @@ private:
     };
 public:
     QString m_amount;
-    Category *m_category;
+    //Category m_category;
+    QString m_category;
     QString m_account;
     QString m_note;
     QImage m_image;

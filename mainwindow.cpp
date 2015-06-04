@@ -3,7 +3,12 @@
 
 #include <QInputDialog>
 #include <QDir>
+#include <QSettings>
+#include <QDesktopWidget>
+#include "constants.h"
+
 #include <QDebug>
+
 
 
 
@@ -22,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tableView->setModel(m_model);
 
+    loadSettings();
 }
 
 MainWindow::~MainWindow()
@@ -29,12 +35,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    Q_UNUSED(event);
+    saveSettings();
+
+}
+
 void MainWindow::onNewBookingCreated(const Booking& b)
 {
     QList<QStandardItem *> itemList;
     itemList.append(new QStandardItem(b.m_bookingTime.toString()));
     itemList.append(new QStandardItem(b.m_amount));
-    itemList.append(new QStandardItem(b.m_category->title()));
+    itemList.append(new QStandardItem(b.m_category));
     itemList.append(new QStandardItem(b.m_account));
     itemList.append(new QStandardItem(b.m_note));
     QStandardItem *imageItem = new QStandardItem();
@@ -50,9 +63,10 @@ void MainWindow::onNewBookingCreated(const Booking& b)
 void MainWindow::on_actionNew_Person_triggered()
 {
     bool ok;
-    QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
-                                             tr("User name:"), QLineEdit::Normal,
-                                             QDir::home().dirName(), &ok);
+    QString text = QInputDialog::getText(this,
+                                         tr("QInputDialog::getText()"),
+                                         tr("User name:"), QLineEdit::Normal,
+                                         QDir::home().dirName(), &ok);
     if (ok && !text.isEmpty()) {
 
         qDebug() << text;
@@ -110,4 +124,29 @@ void MainWindow::on_actionPersons_triggered()
 void MainWindow::on_actionGroups_triggered()
 {
 
+}
+
+void MainWindow::saveSettings()
+{
+    qDebug() << "Saving settings...";
+    QSettings settings;
+
+    settings.beginGroup(Settings::MainWindowGroup);
+    settings.setValue(Settings::MainWindowSize, size());
+    settings.setValue(Settings::MainWindowPosition, pos());
+    settings.endGroup();
+    settings.sync();
+}
+
+void MainWindow::loadSettings()
+{
+    QSettings settings;
+
+    settings.beginGroup(Settings::MainWindowGroup);
+    QRect desktopRect = QApplication::desktop()->screenGeometry();
+    QPoint windowTopLeft(desktopRect.width() / 4, desktopRect.height() / 4);
+    QSize windowSize(desktopRect.width() / 2, desktopRect.height() / 2);
+    resize(settings.value(Settings::MainWindowSize, windowSize).toSize());
+    move(settings.value(Settings::MainWindowPosition, windowTopLeft).toPoint());
+    settings.endGroup();
 }

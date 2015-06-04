@@ -371,5 +371,6 @@
         <file>res/icons/zig.png</file>
         <file>res/icons/zoom71.png</file>
         <file>res/icons/zoom72.png</file>
+        <file>res/AppIcon/book227.icns</file>
     </qresource>
 </RCC>

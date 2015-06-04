@@ -17,8 +17,12 @@ public:
     QIcon icon;
 
     QString title() const;
+    QVector<Category *> getChildren();
 
-    static QVector<Category *> getCategories();
+    void addChild(Category *child);
+    void setParent(Category *parent);
+
+    static Category *getCategories();
 
 signals:
 
@@ -54,6 +58,7 @@ private:
     };
 
     bool m_einnahmen;
+
 
     QString m_title;
     //QIcon icon;

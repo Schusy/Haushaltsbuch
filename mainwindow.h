@@ -22,6 +22,9 @@ public:
 public slots:
     void onNewBookingCreated(const Booking& b);
 
+protected slots:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
 
     void on_actionNew_Person_triggered();
@@ -52,6 +55,8 @@ private:
     QVector<QString> *m_persons;
     QStandardItemModel *m_model;
 
+    void saveSettings();
+    void loadSettings();
 };
 
 #endif // MAINWINDOW_H

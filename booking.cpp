@@ -10,8 +10,8 @@ Booking::~Booking()
 
 }
 
-void Booking::setCategory(Category *category)
+void Booking::setCategory(Category category)
 {
-    m_category = category;
+    //m_category = category;
 }
 
